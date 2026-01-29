@@ -29,7 +29,7 @@ const isRacing = (horseId: number) => {
       </h4>
     </div>
 
-    <div v-if="!hasHorses" class="empty-state">
+    <div v-if="!hasHorses" class="empty-state section-container">
       <p>No horses generated yet. Click "Start Racing" to begin!</p>
     </div>
 

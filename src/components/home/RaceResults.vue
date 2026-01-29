@@ -32,7 +32,7 @@ const formatTimestamp = (timestamp: Date) => {
       <h2 class="section-title">Race Results</h2>
     </div>
 
-    <div v-if="!hasResults" class="empty-state">
+    <div v-if="!hasResults" class="empty-state section-container">
       <p>No results yet. Complete a race to see results!</p>
     </div>
 

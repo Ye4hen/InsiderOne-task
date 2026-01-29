@@ -71,7 +71,7 @@
 
 @include desktop {
   .section-container {
-    max-height: calc(100svh - 180px);
+    height: calc(100svh - 180px);
   }
 }
 

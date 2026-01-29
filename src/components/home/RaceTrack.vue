@@ -47,7 +47,7 @@ const racingHorses = computed(() => {
       </h4>
     </div>
 
-    <div v-if="!hasActiveRace" class="empty-state">
+    <div v-if="!hasActiveRace" class="empty-state section-container">
       <p>No active race. Start racing to see the action!</p>
     </div>
 
