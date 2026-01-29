@@ -1,0 +1,115 @@
+@use 'breakpoints' as *;
+@use 'colors' as *;
+
+.app {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: $color-background;
+  padding: 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 22.5% 52.5% 22.5%;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.section-header {
+  background-color: $color-background;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.625rem;
+  margin-bottom: 0.625rem;
+  z-index: 50;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.section-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $color-text-secondary;
+
+  strong {
+    font-weight: 700;
+    color: $color-text-primary;
+  }
+}
+
+.section-container {
+  padding: 0 1rem 0.5rem;
+  overflow-y: auto;
+}
+
+@include desktop {
+  .section-container {
+    max-height: calc(100svh - 180px);
+  }
+}
+
+@include tablet {
+  .app {
+    padding: 1rem;
+  }
+
+  .main-content {
+    grid-template-columns: auto;
+    gap: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .section-container {
+    max-height: 60svh;
+  }
+}
+
+@include mobile {
+  .app {
+    padding: 0.75rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .main-content {
+    gap: 0.75rem;
+    grid-template-columns: auto;
+  }
+}
