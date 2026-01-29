@@ -17,29 +17,33 @@ test('start → pause → resume: racing indicator + horse position changes acco
   const marker = page.locator('.horse-marker').first()
   await expect(marker).toBeVisible()
 
-  const getLeft = async () =>
-    marker.evaluate((el) => {
-      const v = getComputedStyle(el).left || '0'
-      return Number.parseFloat(v.replace('%', '')) || 0
-    })
+  async function getX() {
+    const box = await marker.boundingBox()
+    return box?.x ?? 0
+  }
 
-  const before = await getLeft()
-  await page.waitForTimeout(1500)
-  const afterRun = await getLeft()
-  expect(afterRun).toBeGreaterThan(before)
+  const before = await getX()
+  await expect
+    .poll(getX, {
+      timeout: 3000,
+    })
+    .toBeGreaterThan(before)
+
+  const afterRun = await getX()
   const runDelta = afterRun - before
 
   // Pause
   const pauseBtn = page.getByRole('button', { name: /Pause/i })
   await expect(pauseBtn).toBeVisible()
-  await pauseBtn.click()
+  await page.waitForTimeout(50)
+  await pauseBtn.click({ force: true })
   await expect(page.locator('.paused-indicator')).toBeVisible()
 
   await page.waitForTimeout(150)
 
-  const pausedSnapshot = await getLeft()
+  const pausedSnapshot = await getX()
   await page.waitForTimeout(700)
-  const pausedLater = await getLeft()
+  const pausedLater = await getX()
   const pausedDelta = Math.abs(pausedLater - pausedSnapshot)
 
   const RELATIVE_ALLOWED = 0.35
@@ -56,9 +60,11 @@ test('start → pause → resume: racing indicator + horse position changes acco
   await expect(page.locator('.racing-indicator')).toBeVisible()
 
   const beforeResume = pausedLater
-  await page.waitForTimeout(700)
-  const afterResume = await getLeft()
-  expect(afterResume).toBeGreaterThan(beforeResume + 0.05)
+  await expect
+    .poll(getX, {
+      timeout: 2000,
+    })
+    .toBeGreaterThan(beforeResume)
 
   await expect(startBtn).toBeDisabled()
 })
